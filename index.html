@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benimle Evlenir Misin?</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: url('arkaplan.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 30px 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            /* Dış taşmaları engellemek için kritik ayar */
+            overflow: hidden; 
+            transition: all 0.3s ease;
+        }
+
+        .card img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            height: 60px; /* Butonların kaymaması için sabit yükseklik */
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        #evetBtn {
+            background-color: #ff4d6d;
+            color: white;
+            z-index: 2;
+        }
+
+        #evetBtn:hover {
+            background-color: #ff758c;
+            transform: scale(1.05);
+        }
+
+        #hayirBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: absolute;
+            /* Başlangıçta butonların yan yana düzgün durması için */
+            right: 50px; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="cardContainer">
+        <img id="mainGif" src="ayar.gif" alt="Sevimli Ayılar">
+        
+        <h1 id="questionText">PANPİS BENNİMLE EVLENİR MİSİN??</h1>
+        
+        <div class="buttons" id="buttonArea">
+            <button id="evetBtn" onclick="kabulEt()">Evet</button>
+            <button id="hayirBtn" onmouseover="kacir()" ontouchstart="kacir(event)">Hayır</button>
+        </div>
+    </div>
+
+    <audio id="sarki" src="sarki.m4a" preload="auto"></audio>
+
+    <script>
+        const hayirBtn = document.getElementById('hayirBtn');
+        const cardContainer = document.getElementById('cardContainer');
+        const mainGif = document.getElementById('mainGif');
+        const questionText = document.getElementById('questionText');
+        const buttonArea = document.getElementById('buttonArea');
+        const sarki = document.getElementById('sarki');
+
+        function kacir(e) {
+            if(e) e.preventDefault();
+
+            // Beyaz kutunun (card) içinden kesinlikle çıkmayacak şekilde sınır hesaplama
+            const maxX = cardContainer.clientWidth - hayirBtn.offsetWidth - 20;
+            const maxY = cardContainer.clientHeight - hayirBtn.offsetHeight - 20;
+
+            const randomX = Math.floor(Math.random() * (maxX - 10)) + 10;
+            const randomY = Math.floor(Math.random() * (maxY - 10)) + 10;
+
+            hayirBtn.style.position = 'absolute';
+            hayirBtn.style.left =
